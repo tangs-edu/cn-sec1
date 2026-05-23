@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华文词语 | Vocabulary Quiz · G3 中一上册</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4f0;
+  --card: #ffffff;
+  --border: #e5dfd7;
+  --text: #1e1810;
+  --muted: #8a7e74;
+  --u1: #c97b5a;
+  --u2: #5e8f6e;
+  --u3: #5579a8;
+  --correct: #3d9e6b;
+  --wrong: #d45858;
+  --shadow: rgba(60,40,20,0.10);
+  --radius: 16px;
+  --accent: #c97b5a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── SCREENS ── */
+.screen { display:none; min-height:100vh; }
+.screen.active { display:flex; flex-direction:column; }
+
+/* ══════════════════════════════
+   HOME SCREEN
+══════════════════════════════ */
+#home {
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+#home::before {
+  content:'';
+  position:absolute;
+  top:-120px; right:-100px;
+  width:400px; height:400px;
+  background: radial-gradient(circle, rgba(201,123,90,0.12) 0%, transparent 70%);
+  pointer-events:none;
+}
+#home::after {
+  content:'';
+  position:absolute;
+  bottom:-80px; left:-80px;
+  width:320px; height:320px;
+  background: radial-gradient(circle, rgba(85,121,168,0.10) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.home-inner {
+  max-width: 520px;
+  width: 100%;
+  z-index:1;
+  text-align:center;
+}
+
+.home-badge {
+  display:inline-block;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 5px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.home-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.home-title span {
+  font-family: 'Noto Serif SC', serif;
+  color: var(--accent);
+}
+
+.home-sub {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  font-weight: 300;
+}
+
+.home-stats {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+.home-stats strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.home-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0 0 32px;
+}
+
+.home-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.mode-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.mode-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 20px 24px;
+  cursor: pointer;
+  transition: all 0.22s;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.mode-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 28px var(--shadow);
+  transform: translateY(-2px);
+}
+.mode-card .mc-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: flex; align-items:center; justify-content:center;
+  margin: 0 auto 14px;
+  font-size: 22px;
+}
+.mode-card.mc .mc-icon { background: rgba(201,123,90,0.12); }
+.mode-card.sp .mc-icon { background: rgba(85,121,168,0.12); }
+.mode-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.mode-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.mode-card .mc-tag {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.mode-card.mc .mc-tag { background: rgba(201,123,90,0.12); color: var(--u1); }
+.mode-card.sp .mc-tag { background: rgba(85,121,168,0.12); color: var(--u3); }
+
+.home-filter-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 0;
+  text-align: left;
+}
+.home-filter-section .home-label { margin-bottom: 12px; }
+.filter-row { display:flex; flex-wrap:wrap; gap:7px; }
+.fbtn {
+  border: 1.5px solid var(--border);
+  background: transparent;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.18s;
+  color: var(--muted);
+  font-weight: 500;
+}
+.fbtn:hover { border-color: var(--accent); color: var(--accent); }
+.fbtn.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.fbtn[data-f="u1"].on { background: var(--u1); border-color: var(--u1); }
+.fbtn[data-f="u2"].on { background: var(--u2); border-color: var(--u2); }
+.fbtn[data-f="u3"].on { background: var(--u3); border-color: var(--u3); }
+
+/* ══════════════════════════════
+   QUIZ HEADER (shared)
+══════════════════════════════ */
+.quiz-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top:0; z-index:50;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.qh-left { display:flex; align-items:center; gap:12px; }
+.back-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 4px;
+  display:flex; align-items:center;
+  transition: color 0.15s;
+}
+.back-btn:hover { color: var(--text); }
+.qh-title { font-size:13px; font-weight:600; color: var(--muted); }
+.qh-mode { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:2px 10px; border-radius:10px; }
+.qh-mode.mc { background: rgba(201,123,90,0.12); color: var(--u1); }
+.qh-mode.sp { background: rgba(85,121,168,0.12); color: var(--u3); }
+
+.qh-right { text-align:right; }
+.q-counter { font-size:22px; font-weight:700; color: var(--accent); line-height:1; }
+.q-counter span { font-size:12px; font-weight:400; color: var(--muted); }
+
+.prog-wrap { height:4px; background: var(--border); }
+.prog-bar { height:100%; background: linear-gradient(90deg, var(--u1), var(--u2), var(--u3)); transition: width 0.4s ease; }
+
+/* ══════════════════════════════
+   QUIZ MAIN
+══════════════════════════════ */
+.quiz-main {
+  flex:1;
+  padding: 28px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Word card */
+.word-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 36px 28px;
+  width: 100%;
+  max-width: 540px;
+  text-align: center;
+  box-shadow: 0 8px 32px var(--shadow);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.word-card::after {
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:4px;
+  background: var(--accent);
+  border-radius: 0 0 20px 20px;
+}
+.wc-unit {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.wc-char {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.wc-type {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+.wc-lesson {
+  font-size: 16px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 6px;
+}
+
+/* Meaning options — single column, left-aligned since text is longer */
+.mn-options {
+  grid-template-columns: 1fr !important;
+}
+.mn-options .mc-opt {
+  text-align: left;
+  font-size: 13px;
+  padding: 14px 16px;
+}
+
+/* Instruction strip */
+.quiz-instruction {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 18px;
+  width:100%; max-width:540px;
+}
+
+/* ── MULTIPLE CHOICE OPTIONS ── */
+.mc-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 540px;
+}
+
+.mc-opt {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Lato', 'DM Sans', sans-serif;
+  letter-spacing: 0.3px;
+  position: relative;
+  overflow: hidden;
+}
+.mc-opt:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: rgba(201,123,90,0.05);
+  transform: translateY(-1px);
+}
+.mc-opt:disabled { cursor: not-allowed; }
+.mc-opt.correct {
+  border-color: var(--correct);
+  background: rgba(61,158,107,0.08);
+  color: var(--correct);
+  font-weight: 600;
+}
+.mc-opt.wrong {
+  border-color: var(--wrong);
+  background: rgba(212,88,88,0.07);
+  color: var(--wrong);
+}
+.mc-opt.reveal {
+  border-color: var(--correct);
+  background: rgba(61,158,107,0.05);
+  color: var(--correct);
+  font-weight: 600;
+}
+.mc-opt .opt-indicator {
+  position:absolute;
+  top:6px; right:8px;
+  font-size:13px;
+}
+
+/* Feedback bar */
+.feedback-bar {
+  width:100%; max-width:540px;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+.feedback-bar.show { display:flex; }
+.feedback-bar.correct { background: rgba(61,158,107,0.10); color: var(--correct); border: 1px solid rgba(61,158,107,0.25); }
+.feedback-bar.wrong   { background: rgba(212,88,88,0.08); color: var(--wrong); border: 1px solid rgba(212,88,88,0.20); }
+.fb-icon { font-size:18px; flex-shrink:0; }
+.fb-text { flex:1; }
+.fb-text .fb-main { font-weight:700; margin-bottom:2px; }
+.fb-text .fb-sub  { font-size:11px; font-weight:400; opacity:0.85; }
+
+.next-btn {
+  width:100%; max-width:540px;
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--text);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: none;
+}
+.next-btn.show { display:block; }
+.next-btn:hover { background: var(--accent); }
+
+/* ── SPEECH MODE ── */
+.speech-area {
+  width:100%; max-width:540px;
+  display:flex; flex-direction:column; align-items:center;
+  gap: 16px;
+}
+
+.mic-btn {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  display: flex; align-items:center; justify-content:center;
+  transition: all 0.2s;
+  position: relative;
+  box-shadow: 0 4px 16px var(--shadow);
+}
+.mic-btn:hover { border-color: var(--u3); transform: scale(1.05); }
+.mic-btn.listening {
+  border-color: var(--u3);
+  background: rgba(85,121,168,0.08);
+  animation: pulse 1.2s infinite;
+}
+.mic-btn svg { color: var(--muted); transition:color 0.2s; }
+.mic-btn.listening svg { color: var(--u3); }
+.mic-btn:disabled { opacity:0.4; cursor:not-allowed; animation:none; }
+
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(85,121,168,0.3); }
+  50% { box-shadow: 0 0 0 14px rgba(85,121,168,0); }
+}
+
+.mic-status {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  min-height: 20px;
+  font-weight: 500;
+}
+.mic-status.listening { color: var(--u3); font-weight:600; }
+
+.transcript-box {
+  width:100%;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  min-height: 68px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.tb-label { font-size: 10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.tb-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.5px;
+  min-height: 26px;
+}
+.tb-text.placeholder { color: var(--muted); font-weight:300; font-style:italic; font-size:13px; }
+
+/* Skip btn for speech */
+.skip-btn {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.18s;
+  width:100%;
+}
+.skip-btn:hover { border-color: var(--wrong); color: var(--wrong); }
+.skip-btn:disabled { opacity:0.3; cursor:not-allowed; }
+
+/* ══════════════════════════════
+   RESULTS SCREEN
+══════════════════════════════ */
+#results {
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.results-hero {
+  width:100%;
+  background: var(--card);
+  padding: 48px 24px 36px;
+  text-align:center;
+  border-bottom: 1px solid var(--border);
+}
+.res-mode-tag {
+  display:inline-block;
+  font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+  padding:3px 12px; border-radius:12px;
+  margin-bottom:20px;
+}
+.res-mode-tag.mc { background:rgba(201,123,90,0.12); color:var(--u1); }
+.res-mode-tag.sp { background:rgba(85,121,168,0.12); color:var(--u3); }
+
+.res-score-ring {
+  width: 140px; height:140px;
+  margin: 0 auto 20px;
+  position:relative;
+}
+.res-score-ring svg { transform: rotate(-90deg); }
+.rsr-track { fill:none; stroke:var(--border); stroke-width:8; }
+.rsr-fill  { fill:none; stroke-width:8; stroke-linecap:round; transition: stroke-dashoffset 1.2s ease; }
+.res-score-label {
+  position:absolute;
+  inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.res-pct {
+  font-family: 'DM Serif Display', serif;
+  font-size: 38px;
+  line-height:1;
+  color: var(--text);
+}
+.res-pct-sym { font-size: 20px; }
+.res-fraction { font-size:11px; color:var(--muted); font-weight:500; margin-top:2px; }
+
+.res-grade {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom:6px;
+}
+.res-subtitle { font-size: 13px; color:var(--muted); }
+
+.results-body {
+  width:100%; max-width:580px;
+  padding: 28px 20px 40px;
+  margin: 0 auto;
+}
+
+.res-stat-row {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:28px;
+}
+.res-stat {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 10px;
+  text-align:center;
+}
+.rs-num { font-size:24px; font-weight:700; margin-bottom:3px; }
+.rs-num.correct { color: var(--correct); }
+.rs-num.wrong   { color: var(--wrong); }
+.rs-num.skip    { color: var(--muted); }
+.rs-lbl { font-size:10px; color:var(--muted); font-weight:600; letter-spacing:0.5px; text-transform:uppercase; }
+
+.res-section-title {
+  font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+  color:var(--muted); margin-bottom:12px;
+}
+
+.res-breakdown {
+  display:flex; flex-direction:column; gap:8px;
+  margin-bottom:28px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.rb-item {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 14px;
+  display:flex; align-items:center; gap:12px;
+}
+.rb-item.c { border-left:3px solid var(--correct); }
+.rb-item.w { border-left:3px solid var(--wrong); }
+.rb-item.s { border-left:3px solid var(--muted); }
+.rb-icon { font-size:14px; flex-shrink:0; }
+.rb-word { font-family:'Noto Serif SC',serif; font-size:18px; font-weight:700; min-width:60px; }
+.rb-detail { flex:1; }
+.rb-correct { font-size:12px; font-weight:600; color:var(--correct); }
+.rb-yours   { font-size:11px; color:var(--wrong); font-weight:500; }
+.rb-label   { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
+
+.res-btns {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+}
+.res-btn {
+  border:none; border-radius:14px; padding:14px; font-size:13px; font-weight:600;
+  font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.2s;
+}
+.res-btn.primary { background:var(--text); color:#fff; }
+.res-btn.primary:hover { background:var(--accent); }
+.res-btn.secondary { background:var(--card); color:var(--text); border:1.5px solid var(--border); }
+.res-btn.secondary:hover { border-color:var(--accent); color:var(--accent); }
+
+/* ── HISTORY BUTTONS UNDER MODE CARDS ── */
+.mode-history-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: -4px;
+  margin-bottom: 20px;
+}
+.hist-btn {
+  border: 1.5px solid var(--border);
+  background: transparent;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.18s;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.hist-btn:hover { border-color: var(--accent); color: var(--accent); }
+.hist-btn.mc:hover { border-color: var(--u1); color: var(--u1); }
+.hist-btn.sp:hover { border-color: var(--u3); color: var(--u3); }
+.hist-btn .hb-count {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ══════════════════════════════
+   HISTORY SCREEN
+══════════════════════════════ */
+#history {
+  flex-direction: column;
+}
+.hist-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top:0; z-index:50;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.hh-left { display:flex; align-items:center; gap:12px; }
+.hh-title { font-size:14px; font-weight:700; }
+.hh-mode { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:2px 10px; border-radius:10px; }
+.hh-mode.mc { background: rgba(201,123,90,0.12); color: var(--u1); }
+.hh-mode.sp { background: rgba(85,121,168,0.12); color: var(--u3); }
+.clear-hist-btn {
+  border: 1.5px solid var(--border);
+  background: none;
+  border-radius: 10px;
+  padding: 6px 13px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.18s;
+}
+.clear-hist-btn:hover { border-color: var(--wrong); color: var(--wrong); }
+
+.hist-body {
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  flex: 1;
+}
+.hist-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.hs-stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+}
+.hs-num { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.hs-lbl { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.hist-section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.hist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hist-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hi-rank {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 22px;
+  text-align: center;
+}
+.hi-score-ring {
+  width: 44px; height: 44px;
+  flex-shrink: 0;
+  position: relative;
+}
+.hi-score-ring svg { transform: rotate(-90deg); }
+.hsr-track { fill:none; stroke:var(--border); stroke-width:4; }
+.hsr-fill  { fill:none; stroke-width:4; stroke-linecap:round; }
+.hi-score-label {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700;
+}
+.hi-detail { flex: 1; }
+.hi-score  { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.hi-meta   { font-size: 11px; color: var(--muted); }
+.hi-pct {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: right;
+  min-width: 48px;
+}
+
+.hist-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+.hist-empty .he-icon { font-size: 36px; margin-bottom: 12px; }
+.hist-empty p { font-size: 13px; line-height: 1.6; }
+
+/* ── MOBILE ── */
+@media(max-width:480px) {
+  .home-title { font-size:36px; }
+  .wc-char { font-size:50px; }
+  .mc-options { grid-template-columns:1fr; }
+  .mode-cards { grid-template-columns:1fr; }
+  .res-stat-row { grid-template-columns:repeat(3,1fr); }
+  .mode-history-row { grid-template-columns:1fr 1fr; }
+}
+
+/* Slide transition */
+.slide-out-left  { animation: slideOutLeft 0.22s ease forwards; }
+.slide-in-right  { animation: slideInRight 0.22s ease forwards; }
+@keyframes slideOutLeft  { to { opacity:0; transform:translateX(-24px); } }
+@keyframes slideInRight  { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:translateX(0); } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HOME ═══════════ -->
+<section class="screen active" id="home">
+  <div class="home-inner">
+    <div class="home-badge">华文伴我行 · G3 中一上册</div>
+    <h1 class="home-title"><span>华文</span> Vocabulary<br>Quiz</h1>
+    <p class="home-sub">Primary 3 · Semester 1 · Vocabulary Practice</p>
+    <p class="home-stats" id="home-word-count">Loading vocabulary...</p>
+
+    <hr class="home-divider">
+
+    <p class="home-label">Select quiz mode</p>
+    <div class="mode-cards">
+      <div class="mode-card mc" onclick="startQuiz('mc')">
+        <span class="mc-tag">Pinyin</span>
+        <div class="mc-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c97b5a" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        </div>
+        <h3>Multiple Choice: Pinyin</h3>
+        <p>See a character. Pick the correct pinyin from 4 options.</p>
+      </div>
+      <div class="mode-card sp" onclick="startQuiz('mn')">
+        <span class="mc-tag" style="background:rgba(85,121,168,0.12);color:var(--u3)">Meaning</span>
+        <div class="mc-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5579a8" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <h3>Multiple Choice: Meaning</h3>
+        <p>See a character. Pick the correct English meaning from 4 options.</p>
+      </div>
+    </div>
+
+    <div class="mode-history-row">
+      <button class="hist-btn mc" onclick="showHistory('mc')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 8v4l3 3M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/></svg>
+        Pinyin History <span class="hb-count" id="mc-hist-count">0</span>
+      </button>
+      <button class="hist-btn sp" onclick="showHistory('mn')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 8v4l3 3M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/></svg>
+        Meaning History <span class="hb-count" id="sp-hist-count">0</span>
+      </button>
+    </div>
+
+    <div class="home-filter-section">
+      <p class="home-label">Filter by unit (optional)</p>
+      <div class="filter-row">
+        <button class="fbtn on" data-f="all" onclick="setFilter('all',this)">All Units</button>
+        <button class="fbtn" data-f="u1" onclick="setFilter('u1',this)">Unit 1 · 新同学</button>
+        <button class="fbtn" data-f="u2" onclick="setFilter('u2',this)">Unit 2 · 团圆</button>
+        <button class="fbtn" data-f="u3" onclick="setFilter('u3',this)">Unit 3 · 狮城</button>
+      </div>
+
+      <p class="home-label" style="margin-top:16px;">Number of questions</p>
+      <div class="filter-row">
+        <button class="fbtn" data-q="25" onclick="setQCount(25,this)">25 Questions</button>
+        <button class="fbtn on" data-q="50" onclick="setQCount(50,this)">50 Questions</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MULTIPLE CHOICE QUIZ ═══════════ -->
+<section class="screen" id="mc-quiz">
+  <div class="quiz-header">
+    <div class="qh-left">
+      <button class="back-btn" onclick="goHome()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="qh-title">Multiple Choice: Pinyin</span>
+      <span class="qh-mode mc">Pinyin</span>
+    </div>
+    <div class="qh-right">
+      <div class="q-counter"><span id="mc-q-num">1</span> <span>/ <span id="mc-q-total">50</span></span></div>
+    </div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="mc-prog" style="width:2%"></div></div>
+
+  <div class="quiz-main">
+    <div class="word-card" id="mc-word-card">
+      <div class="wc-unit" id="mc-unit-label"></div>
+      <div class="wc-char" id="mc-char"></div>
+      <div>
+        <span class="wc-type" id="mc-type"></span>
+      </div>
+      <div class="wc-lesson" id="mc-lesson"></div>
+    </div>
+
+    <p class="quiz-instruction">Choose the correct pinyin (with tones)</p>
+
+    <div class="mc-options" id="mc-options"></div>
+
+    <div class="feedback-bar" id="mc-feedback">
+      <div class="fb-icon" id="mc-fb-icon"></div>
+      <div class="fb-text">
+        <div class="fb-main" id="mc-fb-main"></div>
+        <div class="fb-sub" id="mc-fb-sub"></div>
+      </div>
+    </div>
+
+    <button class="next-btn" id="mc-next" onclick="mcNext()">Next Question →</button>
+  </div>
+</section>
+
+<!-- ═══════════ MEANING MULTIPLE CHOICE QUIZ ═══════════ -->
+<section class="screen" id="mn-quiz">
+  <div class="quiz-header">
+    <div class="qh-left">
+      <button class="back-btn" onclick="goHome()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="qh-title">Multiple Choice: Meaning</span>
+      <span class="qh-mode sp">Meaning</span>
+    </div>
+    <div class="qh-right">
+      <div class="q-counter"><span id="mn-q-num">1</span> <span>/ <span id="mn-q-total">50</span></span></div>
+    </div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="mn-prog" style="width:2%"></div></div>
+
+  <div class="quiz-main">
+    <div class="word-card" id="mn-word-card">
+      <div class="wc-unit" id="mn-unit-label"></div>
+      <div class="wc-char" id="mn-char"></div>
+      <div>
+        <span class="wc-type" id="mn-type"></span>
+      </div>
+      <div class="wc-lesson" id="mn-lesson"></div>
+    </div>
+
+    <p class="quiz-instruction">Choose the correct English meaning</p>
+
+    <div class="mc-options mn-options" id="mn-options"></div>
+
+    <div class="feedback-bar" id="mn-feedback">
+      <div class="fb-icon" id="mn-fb-icon"></div>
+      <div class="fb-text">
+        <div class="fb-main" id="mn-fb-main"></div>
+        <div class="fb-sub" id="mn-fb-sub"></div>
+      </div>
+    </div>
+
+    <button class="next-btn" id="mn-next" onclick="mnNext()">Next Question →</button>
+  </div>
+</section>
+
+<!-- ═══════════ RESULTS ═══════════ -->
+<section class="screen" id="results">
+  <div class="results-hero">
+    <div class="res-mode-tag" id="res-mode-tag">Mode</div>
+    <div class="res-score-ring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle class="rsr-track" cx="70" cy="70" r="58"/>
+        <circle class="rsr-fill" id="res-ring-fill" cx="70" cy="70" r="58"
+          stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+      </svg>
+      <div class="res-score-label">
+        <div class="res-pct"><span id="res-pct-num">0</span><span class="res-pct-sym">%</span></div>
+        <div class="res-fraction" id="res-fraction">0 / 50</div>
+      </div>
+    </div>
+    <div class="res-grade" id="res-grade">—</div>
+    <div class="res-subtitle" id="res-subtitle">—</div>
+  </div>
+
+  <div class="results-body">
+    <div class="res-stat-row">
+      <div class="res-stat">
+        <div class="rs-num correct" id="res-correct-n">0</div>
+        <div class="rs-lbl">Correct</div>
+      </div>
+      <div class="res-stat">
+        <div class="rs-num wrong" id="res-wrong-n">0</div>
+        <div class="rs-lbl">Wrong</div>
+      </div>
+      <div class="res-stat">
+        <div class="rs-num skip" id="res-skip-n">0</div>
+        <div class="rs-lbl">Skipped</div>
+      </div>
+    </div>
+
+    <p class="res-section-title">Question Breakdown</p>
+    <div class="res-breakdown" id="res-breakdown"></div>
+
+    <div class="res-btns">
+      <button class="res-btn primary" onclick="retryQuiz()">Try Again</button>
+      <button class="res-btn secondary" onclick="goHome()">Home</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ HISTORY ═══════════ -->
+<section class="screen" id="history">
+  <div class="hist-header">
+    <div class="hh-left">
+      <button class="back-btn" onclick="goHome()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="hh-title">Attempt History</span>
+      <span class="hh-mode" id="hist-mode-tag">Mode</span>
+    </div>
+    <button class="clear-hist-btn" onclick="clearHistory()">Clear History</button>
+  </div>
+
+  <div class="hist-body">
+    <div class="hist-summary">
+      <div class="hs-stat">
+        <div class="hs-num" id="hs-attempts">0</div>
+        <div class="hs-lbl">Attempts</div>
+      </div>
+      <div class="hs-stat">
+        <div class="hs-num" id="hs-avg">—</div>
+        <div class="hs-lbl">Avg Score</div>
+      </div>
+      <div class="hs-stat">
+        <div class="hs-num" id="hs-best">—</div>
+        <div class="hs-lbl">Best Score</div>
+      </div>
+    </div>
+
+    <p class="hist-section-title">Recent Attempts (latest first)</p>
+    <div class="hist-list" id="hist-list"></div>
+  </div>
+</section>
+
+<script>
+// ════════════════════════════════════════════════
+// VOCABULARY DATA — 华文伴我行 G3 中一上册
+// ════════════════════════════════════════════════
+const ALL = [
+{u:'u1',l:'生活空间·我的新同学',zh:'淘气',py:'táo qì',en:'naughty; mischievous'},
+{u:'u1',l:'生活空间·我的新同学',zh:'惹',py:'rě',en:'to provoke; to cause (trouble)'},
+{u:'u1',l:'生活空间·我的新同学',zh:'两肋插刀',py:'liǎng lèi chā dāo',en:'to be utterly loyal; to go through anything for a friend'},
+{u:'u1',l:'生活空间·我的新同学',zh:'科技',py:'kē jì',en:'science and technology'},
+{u:'u1',l:'生活空间·我的新同学',zh:'来者不拒',py:'lái zhě bù jù',en:'to turn nobody away; to welcome all who come'},
+{u:'u1',l:'生活空间·我的新同学',zh:'口头禅',py:'kǒu tóu chán',en:'pet phrase; catchphrase'},
+{u:'u1',l:'生活空间·我的新同学',zh:'小事一桩',py:'xiǎo shì yī zhuāng',en:'a trivial matter; no big deal; easy as pie'},
+{u:'u1',l:'生活空间·我的新同学',zh:'人缘',py:'rén yuán',en:'popularity; ability to get along well with others'},
+{u:'u1',l:'生活空间·我的新同学',zh:'性格',py:'xìng gé',en:'personality; character; temperament'},
+{u:'u1',l:'生活空间·我的新同学',zh:'直率',py:'zhí shuài',en:'frank; candid; straightforward'},
+{u:'u1',l:'生活空间·我的新同学',zh:'得罪',py:'dé zuì',en:'to offend; to upset someone'},
+{u:'u1',l:'生活空间·我的新同学',zh:'别扭',py:'biè niu',en:'awkward; uncomfortable; ill at ease'},
+{u:'u1',l:'生活空间·我的新同学',zh:'争辩',py:'zhēng biàn',en:'to argue; to debate; to dispute'},
+{u:'u1',l:'生活空间·我的新同学',zh:'即使',py:'jí shǐ',en:'even if; even though'},
+{u:'u1',l:'生活空间·我的新同学',zh:'冤枉',py:'yuān wang',en:'to wrong someone; to accuse falsely; injustice'},
+{u:'u1',l:'生活空间·我的新同学',zh:'推荐',py:'tuī jiàn',en:'to recommend'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'捣乱',py:'dǎo luàn',en:'to cause trouble; to mess things up'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'瞬间',py:'shùn jiān',en:'in an instant; instantly'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'兴致勃勃',py:'xìng zhì bó bó',en:'full of enthusiasm; with great excitement'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'粘',py:'zhān',en:'to stick; to be sticky; to adhere to'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'蛋液',py:'dàn yè',en:'egg liquid; the contents of a broken egg'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'狼狈',py:'láng bèi',en:'in a sorry state; embarrassed; in a difficult situation'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'讥讽',py:'jī fěng',en:'to mock; to ridicule; to taunt'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'赌气',py:'dǔ qì',en:'to act out of spite; to do something in a huff'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'嚷',py:'rǎng',en:'to shout; to yell; to make a fuss'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'小心翼翼',py:'xiǎo xīn yì yì',en:'very carefully; cautiously; with great care'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'荧光笔',py:'yíng guāng bǐ',en:'highlighter pen'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'抵挡',py:'dǐ dǎng',en:'to resist; to withstand; to hold back'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'拉扯',py:'lā che',en:'to pull and tug; to drag; to struggle with'},
+{u:'u1',l:'核心·一个蛋两个蛋三个蛋',zh:'手足无措',py:'shǒu zú wú cuò',en:'at a complete loss; flustered and helpless'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'审案',py:'shěn àn',en:'to hear/try a case; legal proceedings'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'律师',py:'lǜ shī',en:'lawyer; attorney'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'振振有词',py:'zhèn zhèn yǒu cí',en:'to speak with apparent conviction; to argue plausibly'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'心虚',py:'xīn xū',en:'to have a guilty conscience; to feel uneasy inside'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'哑口无言',py:'yǎ kǒu wú yán',en:'speechless; to have nothing to say in response'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'判决',py:'pàn jué',en:'verdict; judgment; ruling'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'泄',py:'xiè',en:'to leak; to deflate; to lose energy/pressure'},
+{u:'u1',l:'巩固·张老师"审案"',zh:'胸有成竹',py:'xiōng yǒu chéng zhú',en:'to have a well-thought-out plan; fully confident'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'葡萄',py:'pú tao',en:'grape'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'象征',py:'xiàng zhēng',en:'to symbolise; symbol; symbolic meaning'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'风俗',py:'fēng sú',en:'customs; traditions; folk practices'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'辞旧迎新',py:'cí jiù yíng xīn',en:'to bid farewell to the old and welcome the new'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'燃放',py:'rán fàng',en:'to set off (fireworks); to ignite and release'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'瓶瓶罐罐',py:'píng píng guàn guàn',en:'bottles and jars; various containers'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'厄运',py:'è yùn',en:'bad luck; misfortune; ill fate'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'前夕',py:'qián xī',en:'eve (of an event); the night before'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'碗碟',py:'wǎn dié',en:'bowls and dishes; tableware'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'预示',py:'yù shì',en:'to foreshadow; to foretell; to be an omen of'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'兆头',py:'zhào tou',en:'omen; sign; portent'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'忙碌',py:'máng lù',en:'busy; hectic; occupied'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'遥远',py:'yáo yuǎn',en:'faraway; distant; remote'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'恭敬',py:'gōng jìng',en:'respectful; deferential; reverent'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'万事大吉',py:'wàn shì dà jí',en:'all the best; may everything go well'},
+{u:'u2',l:'生活空间·世界各地的新年风俗',zh:'元旦',py:'yuán dàn',en:"New Year's Day (1 January)"},
+{u:'u2',l:'核心·团圆饭',zh:'贼',py:'zéi',en:'thief; crafty; stealthy'},
+{u:'u2',l:'核心·团圆饭',zh:'鱼尾纹',py:'yú wěi wén',en:"crow's feet; wrinkles at the corners of the eyes"},
+{u:'u2',l:'核心·团圆饭',zh:'装饰',py:'zhuāng shì',en:'to decorate; decoration; ornament'},
+{u:'u2',l:'核心·团圆饭',zh:'圣诞',py:'shèng dàn',en:'Christmas'},
+{u:'u2',l:'核心·团圆饭',zh:'格格不入',py:'gé gé bù rù',en:'to be out of place; to be incompatible; a misfit'},
+{u:'u2',l:'核心·团圆饭',zh:'结婚',py:'jié hūn',en:'to get married; to marry'},
+{u:'u2',l:'核心·团圆饭',zh:'嫁',py:'jià',en:'(of a woman) to marry; to wed'},
+{u:'u2',l:'核心·团圆饭',zh:'视讯',py:'xùn xùn',en:'video call; video communication'},
+{u:'u2',l:'核心·团圆饭',zh:'沉默寡言',py:'chén mò guǎ yán',en:'quiet and reticent; a person of few words'},
+{u:'u2',l:'核心·团圆饭',zh:'副',py:'fù',en:'(measure word for expressions/pairs); secondary; vice-'},
+{u:'u2',l:'核心·团圆饭',zh:'酷',py:'kù',en:'cool; stern-looking; tough'},
+{u:'u2',l:'核心·团圆饭',zh:'承诺',py:'chéng nuò',en:'promise; to promise; commitment'},
+{u:'u2',l:'核心·团圆饭',zh:'歉意',py:'qiàn yì',en:'apology; feeling of regret; sense of being sorry'},
+{u:'u2',l:'核心·团圆饭',zh:'围炉',py:'wéi lú',en:'to gather around a hotpot; family hotpot reunion'},
+{u:'u2',l:'核心·团圆饭',zh:'蒸腾',py:'zhēng téng',en:'to rise in steam; to billow up'},
+{u:'u2',l:'核心·团圆饭',zh:'叽叽喳喳',py:'jī ji zhā zhā',en:'chattering; chirping; noisy chatter'},
+{u:'u2',l:'核心·团圆饭',zh:'缺席',py:'quē xí',en:'absent; absence; to be absent'},
+{u:'u2',l:'核心·团圆饭',zh:'悦耳',py:'yuè ěr',en:'pleasant to the ear; melodious; sweet-sounding'},
+{u:'u2',l:'巩固·幸运饺子',zh:'红枣',py:'hóng zǎo',en:'red date; jujube'},
+{u:'u2',l:'巩固·幸运饺子',zh:'儿媳妇',py:'ér xí fù',en:'daughter-in-law'},
+{u:'u2',l:'巩固·幸运饺子',zh:'莫名其妙',py:'mò míng qí miào',en:'baffling; inexplicable; puzzling for no apparent reason'},
+{u:'u2',l:'巩固·幸运饺子',zh:'疑惑',py:'yí huò',en:'puzzled; confused; bewildered'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'魅力',py:'mèi lì',en:'charm; charisma; appeal; glamour'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'博物馆',py:'bó wù guǎn',en:'museum'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'悠久',py:'yōu jiǔ',en:'long (of history); age-old; time-honoured'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'遗产',py:'yí chǎn',en:'heritage; legacy; inheritance'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'巴刹',py:'bā sà',en:'wet market; hawker market (from Malay "pasar")'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'同胞',py:'tóng bāo',en:'fellow countrymen; compatriots'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'融合',py:'róng hé',en:'to blend; to fuse; integration; fusion'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'皇宫',py:'huáng gōng',en:'imperial palace; royal palace'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'城堡',py:'chéng bǎo',en:'castle; fortress'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'时尚',py:'shí shàng',en:'fashionable; trendy; fashion'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'彩绘',py:'cǎi huì',en:'colourful painting; painted decoration; mural art'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'流连忘返',py:'liú lián wàng fǎn',en:'to be so enchanted one forgets to leave; to linger'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'娱乐',py:'yú lè',en:'entertainment; amusement; recreation'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'探索',py:'tàn suǒ',en:'to explore; to probe; exploration'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'娘惹',py:'niáng rě',en:'Peranakan; Straits-born Chinese (cultural identity)'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'拍摄',py:'pāi shè',en:'to film; to shoot (a photo or video)'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'平均',py:'píng jūn',en:'average; mean; on average'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'繁忙',py:'fán máng',en:'busy; hectic; bustling'},
+{u:'u3',l:'生活空间·走街串巷逛狮城',zh:'闪耀',py:'shǎn yào',en:'to shine brightly; to glitter; to dazzle'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'横梁',py:'héng liáng',en:'crossbeam; horizontal beam; girder'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'覆盖',py:'fù gài',en:'to cover; to blanket; coverage'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'玻璃',py:'bō lí',en:'glass'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'瀑布',py:'pù bù',en:'waterfall'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'循环',py:'xún huán',en:'to circulate; to recycle; cycle'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'谷',py:'gǔ',en:'valley; gorge; grain'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'株',py:'zhū',en:'(measure word for plants); individual plant; stump'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'设施',py:'shè shī',en:'facilities; installations; amenities'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'蹦跳',py:'bèng tiào',en:'to bounce; to jump; to hop'},
+{u:'u3',l:'核心·魅力四射 星耀樟宜',zh:'甚至',py:'shèn zhì',en:'even; so much so that; to the extent that'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'投降',py:'tóu xiáng',en:'to surrender; to give in'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'自治',py:'zì zhì',en:'self-governance; autonomy; self-rule'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'栏',py:'lán',en:'railing; fence; dock (in court); column'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'棕色',py:'zōng sè',en:'brown (colour)'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'氧化',py:'yǎng huà',en:'to oxidise; oxidation'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'陌生',py:'mò shēng',en:'unfamiliar; strange; unknown'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'宁静',py:'níng jìng',en:'peaceful; tranquil; serene; calm'},
+{u:'u3',l:'巩固·国家美术馆探秘',zh:'属于',py:'shǔ yú',en:'to belong to; to be part of'},
+];
+
+// Unit colors and labels
+const UC = { u1:{c:'var(--u1)',tl:'Unit 1'}, u2:{c:'var(--u2)',tl:'Unit 2'}, u3:{c:'var(--u3)',tl:'Unit 3'} };
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let currentFilter = 'all';
+let currentMode = '';
+let questionCount = 50;
+let quizPool = [];
+let qIdx = 0;
+let answers = [];
+let answered = false;
+let viewingHistoryMode = '';
+
+const STORAGE_KEY_MC = 'huawen_quiz_history_mc';
+const STORAGE_KEY_SP = 'huawen_quiz_history_mn';
+const MAX_HISTORY = 20;
+
+// ════════════════════════════════════════════════
+// LOCALSTORAGE HELPERS
+// ════════════════════════════════════════════════
+function getHistory(mode) {
+  const key = mode === 'mc' ? STORAGE_KEY_MC : STORAGE_KEY_SP;
+  try {
+    return JSON.parse(localStorage.getItem(key) || '[]');
+  } catch(e) { return []; }
+}
+
+function saveHistory(mode, record) {
+  const key = mode === 'mc' ? STORAGE_KEY_MC : STORAGE_KEY_SP;
+  let hist = getHistory(mode);
+  hist.unshift(record); // newest first
+  if (hist.length > MAX_HISTORY) hist = hist.slice(0, MAX_HISTORY);
+  try { localStorage.setItem(key, JSON.stringify(hist)); } catch(e) {}
+}
+
+function updateHistoryCounts() {
+  const mc = getHistory('mc').length;
+  const sp = getHistory('sp').length;
+  document.getElementById('mc-hist-count').textContent = mc;
+  document.getElementById('sp-hist-count').textContent = sp;
+}
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('home-word-count').innerHTML =
+    `<strong>${ALL.length}</strong> vocabulary words across 3 units · 25 or 50 questions per session`;
+  updateHistoryCounts();
+});
+
+// ════════════════════════════════════════════════
+// SOUNDS (Web Audio API — no external files)
+// ════════════════════════════════════════════════
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playCorrect() {
+  try {
+    const ctx = getAudioCtx();
+    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.1);
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.1);
+      gain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + i * 0.1 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.25);
+      osc.start(ctx.currentTime + i * 0.1);
+      osc.stop(ctx.currentTime + i * 0.1 + 0.25);
+    });
+  } catch(e) {}
+}
+
+function playWrong() {
+  try {
+    const ctx = getAudioCtx();
+    const notes = [311.13, 277.18]; // Eb4, Db4 — descending minor 2nd
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.15);
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.15);
+      gain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + i * 0.15 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.15 + 0.3);
+      osc.start(ctx.currentTime + i * 0.15);
+      osc.stop(ctx.currentTime + i * 0.15 + 0.3);
+    });
+  } catch(e) {}
+}
+
+// ════════════════════════════════════════════════
+// FILTER
+// ════════════════════════════════════════════════
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.fbtn[data-f]').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function setQCount(n, btn) {
+  questionCount = n;
+  document.querySelectorAll('.fbtn[data-q]').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function getPool() {
+  let src = currentFilter === 'all' ? ALL : ALL.filter(w => w.u === currentFilter);
+  let arr = [...src];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  // If fewer than questionCount, repeat until we have enough
+  let pool = [];
+  while (pool.length < questionCount) pool = pool.concat(arr);
+  return pool.slice(0, questionCount);
+}
+
+// ════════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function goHome() {
+  showScreen('home');
+}
+
+// ════════════════════════════════════════════════
+// START QUIZ
+// ════════════════════════════════════════════════
+function startQuiz(mode) {
+  currentMode = mode;
+  quizPool = getPool();
+  qIdx = 0;
+  answers = [];
+  answered = false;
+
+  if (mode === 'mc') {
+    showScreen('mc-quiz');
+    renderMC();
+  } else {
+    showScreen('mn-quiz');
+    renderMN();
+  }
+}
+
+function retryQuiz() {
+  startQuiz(currentMode);
+}
+
+// ════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════
+function getWordType(w) {
+  const clean = w.zh.replace(/\s/g, '');
+  if (clean.length >= 4) return '成语/短语';
+  return '词语';
+}
+
+function getUnitColor(u) {
+  return UC[u]?.c || 'var(--u1)';
+}
+
+function syllableCount(py) {
+  return py.trim().split(/\s+/).length;
+}
+
+function getWrongOptions(correct, count) {
+  const correctSyllables = syllableCount(correct.py);
+  // Prefer distractors with same syllable count
+  let pool = ALL.filter(w => w.py !== correct.py && syllableCount(w.py) === correctSyllables);
+  if (pool.length < count) {
+    const extra = ALL.filter(w => w.py !== correct.py && syllableCount(w.py) !== correctSyllables);
+    pool = pool.concat(extra);
+  }
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  // Deduplicate by py
+  const seen = new Set();
+  const picks = [];
+  for (const w of shuffled) {
+    if (!seen.has(w.py) && picks.length < count) {
+      seen.add(w.py);
+      picks.push(w);
+    }
+  }
+  return picks.map(w => w.py);
+}
+
+function buildMCOptions(correct) {
+  const wrongs = getWrongOptions(correct, 3);
+  const options = [...wrongs, correct.py];
+  // Shuffle options
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+  return options;
+}
+
+// Strip tones for fuzzy comparison
+function stripTones(s) {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[üǖ]/g,'u').toLowerCase().replace(/\s+/g,' ').trim();
+}
+
+// Compare pinyin answer (tone-aware or tone-stripped)
+function pinyinMatch(input, correct) {
+  if (!input) return false;
+  const a = input.toLowerCase().trim();
+  const b = correct.toLowerCase().trim();
+  if (a === b) return true;
+  // Strip tones and spaces
+  if (stripTones(a).replace(/\s/g,'') === stripTones(b).replace(/\s/g,'')) return true;
+  return false;
+}
+
+// ════════════════════════════════════════════════
+// MULTIPLE CHOICE
+// ════════════════════════════════════════════════
+function renderMC() {
+  const w = quizPool[qIdx];
+  answered = false;
+
+  // Progress
+  const pct = ((qIdx + 1) / questionCount) * 100;
+  document.getElementById('mc-prog').style.width = pct + '%';
+  document.getElementById('mc-q-num').textContent = qIdx + 1;
+  document.getElementById('mc-q-total').textContent = questionCount;
+
+  // Word card
+  const col = getUnitColor(w.u);
+  document.getElementById('mc-unit-label').textContent = UC[w.u].tl;
+  document.getElementById('mc-char').textContent = w.zh;
+  document.getElementById('mc-char').style.color = col;
+  const wt = document.getElementById('mc-type');
+  wt.textContent = getWordType(w);
+  wt.style.background = col + '22';
+  wt.style.color = col;
+  document.getElementById('mc-lesson').textContent = w.l.replace('·',' · ');
+  document.getElementById('mc-word-card').style.setProperty('--accent', col);
+  document.getElementById('mc-word-card').querySelector('::after'); // force repaint
+  document.querySelector('#mc-word-card::after') ; // noop
+  // Set strip color via a data attr
+  document.getElementById('mc-word-card').style.borderBottom = 'none';
+  document.getElementById('mc-word-card').style.boxShadow = '0 8px 32px var(--shadow)';
+
+  // Options
+  const options = buildMCOptions(w);
+  const container = document.getElementById('mc-options');
+  container.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectMCOption(btn, opt, w);
+    container.appendChild(btn);
+  });
+
+  // Hide feedback & next
+  const fb = document.getElementById('mc-feedback');
+  fb.className = 'feedback-bar';
+  document.getElementById('mc-next').classList.remove('show');
+
+  // Animate card in
+  const card = document.getElementById('mc-word-card');
+  card.classList.remove('slide-in-right');
+  void card.offsetWidth;
+  card.classList.add('slide-in-right');
+}
+
+function selectMCOption(btn, chosen, word) {
+  if (answered) return;
+  answered = true;
+
+  const correct = chosen === word.py;
+  const allBtns = document.querySelectorAll('.mc-opt');
+
+  allBtns.forEach(b => {
+    b.disabled = true;
+    if (b.textContent === word.py) {
+      b.classList.add(correct ? 'correct' : 'reveal');
+      b.innerHTML += '<span class="opt-indicator">✓</span>';
+    }
+  });
+
+  if (!correct) {
+    btn.classList.add('wrong');
+    btn.innerHTML += '<span class="opt-indicator">✗</span>';
+  }
+
+  // Feedback
+  const fb = document.getElementById('mc-feedback');
+  const fbMain = document.getElementById('mc-fb-main');
+  const fbSub = document.getElementById('mc-fb-sub');
+  const fbIcon = document.getElementById('mc-fb-icon');
+
+  if (correct) {
+    fb.className = 'feedback-bar show correct';
+    fbIcon.textContent = '✓';
+    fbMain.textContent = 'Correct!';
+    fbSub.textContent = `${word.zh} → ${word.py} · ${word.en.split(';')[0]}`;
+    playCorrect();
+  } else {
+    fb.className = 'feedback-bar show wrong';
+    fbIcon.textContent = '✗';
+    fbMain.textContent = 'Incorrect';
+    fbSub.textContent = `Correct answer: ${word.py} · ${word.en.split(';')[0]}`;
+    playWrong();
+  }
+
+  answers.push({ word, correct, given: chosen, skipped: false });
+
+  document.getElementById('mc-next').classList.add('show');
+}
+
+function mcNext() {
+  qIdx++;
+  if (qIdx >= questionCount) {
+    showResults();
+    return;
+  }
+  renderMC();
+}
+
+// ════════════════════════════════════════════════
+// MEANING MULTIPLE CHOICE MODE
+// ════════════════════════════════════════════════
+function getMeaningOptions(correct, count) {
+  // Strip to first meaning only for cleaner options
+  const correctMeaning = correct.en.split(';')[0].trim();
+  let pool = ALL.filter(w => w.en.split(';')[0].trim() !== correctMeaning);
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  const seen = new Set([correctMeaning]);
+  const picks = [];
+  for (const w of shuffled) {
+    const m = w.en.split(';')[0].trim();
+    if (!seen.has(m) && picks.length < count) {
+      seen.add(m);
+      picks.push(m);
+    }
+  }
+  return picks;
+}
+
+function renderMN() {
+  const w = quizPool[qIdx];
+  answered = false;
+
+  const pct = ((qIdx + 1) / questionCount) * 100;
+  document.getElementById('mn-prog').style.width = pct + '%';
+  document.getElementById('mn-q-num').textContent = qIdx + 1;
+  document.getElementById('mn-q-total').textContent = questionCount;
+
+  const col = getUnitColor(w.u);
+  document.getElementById('mn-unit-label').textContent = UC[w.u].tl;
+  document.getElementById('mn-char').textContent = w.zh;
+  document.getElementById('mn-char').style.color = col;
+  const wt = document.getElementById('mn-type');
+  wt.textContent = getWordType(w);
+  wt.style.background = col + '22';
+  wt.style.color = col;
+  document.getElementById('mn-lesson').textContent = w.l.replace('·', ' · ');
+
+  // Build options
+  const correctMeaning = w.en.split(';')[0].trim();
+  const wrongs = getMeaningOptions(w, 3);
+  const options = [...wrongs, correctMeaning].sort(() => Math.random() - 0.5);
+
+  const container = document.getElementById('mn-options');
+  container.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectMNOption(btn, opt, w);
+    container.appendChild(btn);
+  });
+
+  document.getElementById('mn-feedback').className = 'feedback-bar';
+  document.getElementById('mn-next').classList.remove('show');
+
+  const card = document.getElementById('mn-word-card');
+  card.classList.remove('slide-in-right');
+  void card.offsetWidth;
+  card.classList.add('slide-in-right');
+}
+
+function selectMNOption(btn, chosen, word) {
+  if (answered) return;
+  answered = true;
+
+  const correctMeaning = word.en.split(';')[0].trim();
+  const correct = chosen === correctMeaning;
+  const allBtns = document.querySelectorAll('#mn-options .mc-opt');
+
+  allBtns.forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correctMeaning) {
+      b.classList.add(correct ? 'correct' : 'reveal');
+      b.innerHTML += '<span class="opt-indicator">✓</span>';
+    }
+  });
+
+  if (!correct) {
+    btn.classList.add('wrong');
+    btn.innerHTML += '<span class="opt-indicator">✗</span>';
+  }
+
+  const fb = document.getElementById('mn-feedback');
+  const fbMain = document.getElementById('mn-fb-main');
+  const fbSub = document.getElementById('mn-fb-sub');
+  const fbIcon = document.getElementById('mn-fb-icon');
+
+  if (correct) {
+    fb.className = 'feedback-bar show correct';
+    fbIcon.textContent = '✓';
+    fbMain.textContent = 'Correct!';
+    fbSub.textContent = `${word.zh} · ${word.py} — ${word.en.split(';')[0]}`;
+    playCorrect();
+  } else {
+    fb.className = 'feedback-bar show wrong';
+    fbIcon.textContent = '✗';
+    fbMain.textContent = 'Incorrect';
+    fbSub.textContent = `Correct: ${word.en.split(';')[0]} · Pinyin: ${word.py}`;
+    playWrong();
+  }
+
+  answers.push({ word, correct, given: chosen, skipped: false });
+  document.getElementById('mn-next').classList.add('show');
+}
+
+function mnNext() {
+  qIdx++;
+  if (qIdx >= questionCount) {
+    showResults();
+    return;
+  }
+  renderMN();
+}
+
+// ════════════════════════════════════════════════
+// RESULTS
+// ════════════════════════════════════════════════
+function showResults() {
+
+  showScreen('results');
+
+  const correctCount = answers.filter(a => a.correct).length;
+  const wrongCount = answers.filter(a => !a.correct && !a.skipped).length;
+  const skipCount = answers.filter(a => a.skipped).length;
+  const pct = Math.round((correctCount / questionCount) * 100);
+
+  // Save to history
+  const record = {
+    date: new Date().toISOString(),
+    mode: currentMode,
+    filter: currentFilter,
+    correct: correctCount,
+    wrong: wrongCount,
+    skipped: skipCount,
+    total: questionCount,
+    pct: pct
+  };
+  saveHistory(currentMode, record);
+  updateHistoryCounts();
+
+  // Mode tag
+  const modeTag = document.getElementById('res-mode-tag');
+  if (currentMode === 'mc') { modeTag.textContent = 'Multiple Choice: Pinyin'; modeTag.className = 'res-mode-tag mc'; }
+  else { modeTag.textContent = 'Multiple Choice: Meaning'; modeTag.className = 'res-mode-tag sp'; }
+
+  // Ring animation
+  const circumference = 364.4;
+  const offset = circumference - (pct / 100) * circumference;
+  const fill = document.getElementById('res-ring-fill');
+  fill.style.stroke = pct >= 80 ? 'var(--correct)' : pct >= 60 ? 'var(--u2)' : 'var(--wrong)';
+  setTimeout(() => { fill.style.strokeDashoffset = offset; }, 100);
+
+  document.getElementById('res-pct-num').textContent = pct;
+  document.getElementById('res-fraction').textContent = `${correctCount} / ${questionCount}`;
+
+  // Grade
+  let grade, subtitle;
+  if (pct === 100) { grade = 'Perfect Score!'; subtitle = 'Outstanding — every answer correct.'; }
+  else if (pct >= 90) { grade = 'Excellent'; subtitle = 'Near-perfect — keep it up!'; }
+  else if (pct >= 80) { grade = 'Great Work'; subtitle = 'Strong performance overall.'; }
+  else if (pct >= 70) { grade = 'Good Effort'; subtitle = 'Above average — room to improve.'; }
+  else if (pct >= 60) { grade = 'Keep Studying'; subtitle = 'Review the words you missed.'; }
+  else { grade = 'More Practice Needed'; subtitle = 'Go through the flashcards first.'; }
+  document.getElementById('res-grade').textContent = grade;
+  document.getElementById('res-subtitle').textContent = subtitle;
+
+  // Stats
+  document.getElementById('res-correct-n').textContent = correctCount;
+  document.getElementById('res-wrong-n').textContent = wrongCount;
+  document.getElementById('res-skip-n').textContent = skipCount;
+
+  // Breakdown — show wrong/skipped first, then correct
+  const breakdown = document.getElementById('res-breakdown');
+  breakdown.innerHTML = '';
+  const sorted = [
+    ...answers.filter(a => a.skipped),
+    ...answers.filter(a => !a.correct && !a.skipped),
+    ...answers.filter(a => a.correct),
+  ];
+  sorted.forEach(a => {
+    const div = document.createElement('div');
+    div.className = 'rb-item ' + (a.correct ? 'c' : a.skipped ? 's' : 'w');
+    const icon = a.correct ? '✓' : a.skipped ? '—' : '✗';
+    let detail = '';
+    if (a.correct) {
+      detail = `<div class="rb-correct">${a.word.py}</div>`;
+    } else if (a.skipped) {
+      detail = `<div class="rb-correct">${a.word.py}</div><div class="rb-yours">(skipped)</div>`;
+    } else {
+      detail = `<div class="rb-correct">Correct: ${a.word.py}</div><div class="rb-yours">Your answer: ${a.given}</div>`;
+    }
+    div.innerHTML = `
+      <div class="rb-icon">${icon}</div>
+      <div class="rb-word">${a.word.zh}</div>
+      <div class="rb-detail">${detail}</div>
+    `;
+    breakdown.appendChild(div);
+  });
+}
+
+// ════════════════════════════════════════════════
+// HISTORY SCREEN
+// ════════════════════════════════════════════════
+function showHistory(mode) {
+  viewingHistoryMode = mode;
+
+  // Update header
+  const tag = document.getElementById('hist-mode-tag');
+  if (mode === 'mc') { tag.textContent = 'Multiple Choice: Pinyin'; tag.className = 'hh-mode mc'; }
+  else { tag.textContent = 'Multiple Choice: Meaning'; tag.className = 'hh-mode sp'; }
+
+  renderHistoryList(mode);
+  showScreen('history');
+}
+
+function renderHistoryList(mode) {
+  const hist = getHistory(mode);
+  const list = document.getElementById('hist-list');
+  list.innerHTML = '';
+
+  // Summary stats
+  document.getElementById('hs-attempts').textContent = hist.length;
+  if (hist.length === 0) {
+    document.getElementById('hs-avg').textContent = '—';
+    document.getElementById('hs-best').textContent = '—';
+    list.innerHTML = `
+      <div class="hist-empty">
+        <div class="he-icon">📋</div>
+        <p>No attempts recorded yet.<br>Complete a quiz to see your history here.</p>
+      </div>`;
+    return;
+  }
+
+  const avg = Math.round(hist.reduce((s, r) => s + r.pct, 0) / hist.length);
+  const best = Math.max(...hist.map(r => r.pct));
+  document.getElementById('hs-avg').textContent = avg + '%';
+  document.getElementById('hs-best').textContent = best + '%';
+
+  const circumference = 2 * Math.PI * 16; // r=16 → ~100.5
+
+  hist.forEach((r, i) => {
+    const date = new Date(r.date);
+    const dateStr = date.toLocaleDateString('en-SG', { day:'numeric', month:'short', year:'numeric' });
+    const timeStr = date.toLocaleTimeString('en-SG', { hour:'2-digit', minute:'2-digit' });
+    const filterLabel = r.filter === 'all' ? 'All Units' : r.filter === 'u1' ? 'Unit 1' : r.filter === 'u2' ? 'Unit 2' : 'Unit 3';
+    const ringColor = r.pct >= 80 ? 'var(--correct)' : r.pct >= 60 ? 'var(--u2)' : 'var(--wrong)';
+    const offset = circumference - (r.pct / 100) * circumference;
+
+    const item = document.createElement('div');
+    item.className = 'hist-item';
+    item.innerHTML = `
+      <div class="hi-rank">#${i + 1}</div>
+      <div class="hi-score-ring">
+        <svg width="44" height="44" viewBox="0 0 44 44">
+          <circle class="hsr-track" cx="22" cy="22" r="16"/>
+          <circle class="hsr-fill" cx="22" cy="22" r="16"
+            stroke="${ringColor}"
+            stroke-dasharray="${circumference.toFixed(1)}"
+            stroke-dashoffset="${offset.toFixed(1)}"/>
+        </svg>
+        <div class="hi-score-label" style="color:${ringColor}">${r.pct}%</div>
+      </div>
+      <div class="hi-detail">
+        <div class="hi-score">${r.correct} / ${r.total || 50} correct</div>
+        <div class="hi-meta">${dateStr} · ${timeStr} · ${filterLabel}</div>
+      </div>
+      <div class="hi-pct" style="color:${ringColor}">${r.pct}%</div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function clearHistory() {
+  if (!confirm(`Clear all ${viewingHistoryMode === 'mc' ? 'Multiple Choice' : 'Speech'} history? This cannot be undone.`)) return;
+  const key = viewingHistoryMode === 'mc' ? STORAGE_KEY_MC : STORAGE_KEY_SP;
+  localStorage.removeItem(key);
+  updateHistoryCounts();
+  renderHistoryList(viewingHistoryMode);
+}
+</script>
+</body>
+</html>
